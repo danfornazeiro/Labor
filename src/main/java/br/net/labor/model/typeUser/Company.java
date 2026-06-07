@@ -1,8 +1,11 @@
 package br.net.labor.model.typeUser;
 
+import br.net.labor.model.user.JobVacancies;
 import br.net.labor.model.user.User;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -19,6 +22,8 @@ public class Company {
     private String industry;
     private String companyPhoto;
     private String status;
+    @OneToMany(mappedBy = "company")
+    private List<JobVacancies> jobVacancies = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -86,5 +91,13 @@ public class Company {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<JobVacancies> getJobVacancies() {
+        return jobVacancies;
+    }
+
+    public void setJobVacancies(List<JobVacancies> jobVacancies) {
+        this.jobVacancies = jobVacancies;
     }
 }

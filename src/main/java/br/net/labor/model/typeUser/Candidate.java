@@ -1,5 +1,6 @@
 package br.net.labor.model.typeUser;
 
+import br.net.labor.model.user.JobVacancies;
 import br.net.labor.model.user.User;
 import jakarta.persistence.*;
 
@@ -20,6 +21,9 @@ public class Candidate {
     private String userPhoto;
     private String status;
     private String realName;
+    @ManyToOne
+    @JoinColumn(name = "job_vacancy_id")
+    private JobVacancies jobVacancies;
 
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -87,5 +91,13 @@ public class Candidate {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public JobVacancies getJobVacancies() {
+        return jobVacancies;
+    }
+
+    public void setJobVacancies(JobVacancies jobVacancies) {
+        this.jobVacancies = jobVacancies;
     }
 }
