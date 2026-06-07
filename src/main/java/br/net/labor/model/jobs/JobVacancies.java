@@ -2,6 +2,7 @@ package br.net.labor.model.jobs;
 
 import br.net.labor.model.typeUser.Candidate;
 import br.net.labor.model.typeUser.Company;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -23,9 +24,11 @@ public class JobVacancies {
     private Date dateJob;
     private String description;
     @OneToMany(mappedBy = "jobVacancies")
+    @JsonIgnoreProperties("jobVacancies")
     private List<Candidate> candidates;
     @ManyToOne
     @JoinColumn(name = "company_id")
+    @JsonIgnoreProperties("jobVacancies")
     private Company company;
 
     public List<Candidate> getCandidates() {

@@ -2,16 +2,17 @@ package br.net.labor.controller;
 
 import br.net.labor.model.dto.jobs.JobsVacanciesRequestDTO;
 import br.net.labor.model.dto.jobs.JobsVacanciesResponseDTO;
+import br.net.labor.model.jobs.JobVacancies;
 import br.net.labor.service.JobVacanciesService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import br.net.labor.config.JWTUserData;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/jobsVacancies")
@@ -36,5 +37,14 @@ public class JobsVacanciesController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @GetMapping
+    public List<JobVacancies> getAll(){
+        return jobVacanciesService.getAll();
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable UUID id){
+        jobVacanciesService.deleteById(id);
+    }
 
 }

@@ -9,6 +9,9 @@ import br.net.labor.repository.CompanyRepository;
 import br.net.labor.repository.JobVacanciesRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.UUID;
+
 @Service
 public class JobVacanciesService {
 
@@ -34,21 +37,24 @@ public class JobVacanciesService {
         jobVacancies.setCompany(company);
         var savedJob = jobVacanciesRepository.save(jobVacancies);
 
-        CompanyResponseDTO companyResponse = new CompanyResponseDTO(
-                company.getCompanyName(),
-                company.getUser().getEmail()
-        );
-
         return new JobsVacanciesResponseDTO(
+                savedJob.getId(),
                 savedJob.getTitle(),
                 savedJob.getAbility(),
                 savedJob.getPayValue(),
                 savedJob.getInitAndEndTime(),
                 savedJob.getDateJob(),
                 savedJob.getDescription(),
-                companyResponse
+                savedJob.getCompany().getCompanyName()
         );
+    }
 
+    public List<JobVacancies> getAll(){
+        return jobVacanciesRepository.findAll();
+    }
+
+    public void deleteById(UUID id){
+        jobVacanciesRepository.deleteById(id);
     }
 
 }
