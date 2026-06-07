@@ -1,7 +1,7 @@
 package br.net.labor.controller;
 
-import br.net.labor.model.dto.LoginRequest;
-import br.net.labor.model.dto.LoginResponse;
+import br.net.labor.model.dto.typeUsers.LoginRequest;
+import br.net.labor.model.dto.typeUsers.LoginResponse;
 import br.net.labor.model.dto.typeUsers.candidate.CandidateRequest;
 import br.net.labor.model.dto.typeUsers.candidate.CandidateResponse;
 import br.net.labor.model.dto.typeUsers.company.CompanyRequestDTO;

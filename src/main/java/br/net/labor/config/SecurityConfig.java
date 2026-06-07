@@ -33,7 +33,7 @@ private final SecurityFilter securityFilter;
                                 "/swagger-ui.html",
                                 "/v3/api-docs/**"
                                 ).permitAll()
-                        .requestMatchers("/api/candidate/**").hasAnyRole("CANDIDATE","ADMIN")
+                        .requestMatchers("/api/jobsVacancies/**").hasAnyRole("COMPANY","ADMIN")
                         .requestMatchers("/api/company/**").hasAnyRole("COMPANY","ADMIN")
                         .anyRequest().authenticated()
                 )

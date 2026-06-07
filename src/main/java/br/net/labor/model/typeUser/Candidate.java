@@ -1,6 +1,6 @@
 package br.net.labor.model.typeUser;
 
-import br.net.labor.model.user.JobVacancies;
+import br.net.labor.model.jobs.JobVacancies;
 import br.net.labor.model.user.User;
 import jakarta.persistence.*;
 

@@ -1,4 +1,4 @@
-package br.net.labor.model.user;
+package br.net.labor.model.jobs;
 
 import br.net.labor.model.typeUser.Candidate;
 import br.net.labor.model.typeUser.Company;

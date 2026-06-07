@@ -32,16 +32,18 @@ public class SecurityFilter extends OncePerRequestFilter {
             Optional<JWTUserData> userOpt = tokenService.validateToken(token);
             if(userOpt.isPresent()){
                 JWTUserData userData = userOpt.get();
-                var authorities = List.of(
-                        new SimpleGrantedAuthority(
-                                userData.role()
-                        )
-                        );
-                        var authentication = new UsernamePasswordAuthenticationToken(
-                                userData,
-                                null,
-                                authorities
-                        );
+                String role = userData.role();
+                if (role == null) {
+                    role = "USER"; // fallback if token has no role claim
+                }
+                String authority = role.startsWith("ROLE_") ? role : "ROLE_" + role;
+                var authorities = List.of(new SimpleGrantedAuthority(authority));
+
+                var authentication = new UsernamePasswordAuthenticationToken(
+                        userData,
+                        null,
+                        authorities
+                );
                 SecurityContextHolder.getContext()
                         .setAuthentication(authentication);
             }
