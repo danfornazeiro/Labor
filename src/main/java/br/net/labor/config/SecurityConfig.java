@@ -34,6 +34,7 @@ private final SecurityFilter securityFilter;
                                 "/v3/api-docs/**"
                                 ).permitAll()
                         .requestMatchers("/api/jobsVacancies/**").hasAnyRole("COMPANY","ADMIN")
+                        .requestMatchers("/api/likeInJobs/**").hasAnyRole("CANDIDATE","ADMIN")
                         .requestMatchers("/api/company/**").hasAnyRole("COMPANY","ADMIN")
                         .anyRequest().authenticated()
                 )

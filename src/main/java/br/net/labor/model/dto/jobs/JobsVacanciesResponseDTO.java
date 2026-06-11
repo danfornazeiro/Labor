@@ -1,9 +1,10 @@
 package br.net.labor.model.dto.jobs;
 
-import br.net.labor.model.dto.typeUsers.company.CompanyResponseDTO;
+import br.net.labor.model.typeUser.Candidate;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public record JobsVacanciesResponseDTO(
@@ -11,9 +12,11 @@ public record JobsVacanciesResponseDTO(
                                        String title,
                                        String ability,
                                        Double payValue,
-                                       LocalDateTime initAndEndTime,
+                                       LocalTime initTime,
+                                       LocalTime endTime,
                                        Date dateJob,
                                        String description,
-                                       String companyName
+                                       String companyName,
+                                       List<Candidate> candidate
 ) {
 }

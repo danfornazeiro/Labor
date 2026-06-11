@@ -38,7 +38,7 @@ public class JobsVacanciesController {
     }
 
     @GetMapping
-    public List<JobVacancies> getAll(){
+    public List<JobsVacanciesResponseDTO> getAll(){
         return jobVacanciesService.getAll();
     }
 

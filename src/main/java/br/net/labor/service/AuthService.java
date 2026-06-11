@@ -113,7 +113,17 @@ public class AuthService {
                 candidate.getUsername(),
                 user.getEmail()
         );
-
     }
+
+
+    public void cadAdm(){
+       User user = new User();
+       user.setEmail("adm@gmail.com");
+       user.setPassword(passwordEncoder.encode("admin123"));
+       user.setRole(RolesEnumType.ROLE_ADMIN);
+       userRepository.save(user);
+    }
+
+
 
 }

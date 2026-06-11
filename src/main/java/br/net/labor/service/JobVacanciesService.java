@@ -2,7 +2,6 @@ package br.net.labor.service;
 
 import br.net.labor.model.dto.jobs.JobsVacanciesRequestDTO;
 import br.net.labor.model.dto.jobs.JobsVacanciesResponseDTO;
-import br.net.labor.model.dto.typeUsers.company.CompanyResponseDTO;
 import br.net.labor.model.jobs.JobVacancies;
 import br.net.labor.model.typeUser.Company;
 import br.net.labor.repository.CompanyRepository;
@@ -31,10 +30,12 @@ public class JobVacanciesService {
         jobVacancies.setTitle(jobsVacanciesRequestDTO.title());
         jobVacancies.setAbility(jobsVacanciesRequestDTO.ability());
         jobVacancies.setPayValue(jobsVacanciesRequestDTO.payValue());
-        jobVacancies.setInitAndEndTime(jobsVacanciesRequestDTO.initAndEndTime());
+        jobVacancies.setInitTime(jobsVacanciesRequestDTO.initTime());
+        jobVacancies.setEndTime(jobsVacanciesRequestDTO.endTime());
         jobVacancies.setDateJob(jobsVacanciesRequestDTO.dateJob());
         jobVacancies.setDescription(jobsVacanciesRequestDTO.description());
         jobVacancies.setCompany(company);
+        jobVacancies.setCandidates(null);
         var savedJob = jobVacanciesRepository.save(jobVacancies);
 
         return new JobsVacanciesResponseDTO(
@@ -42,15 +43,30 @@ public class JobVacanciesService {
                 savedJob.getTitle(),
                 savedJob.getAbility(),
                 savedJob.getPayValue(),
-                savedJob.getInitAndEndTime(),
+                savedJob.getInitTime(),
+                savedJob.getEndTime(),
                 savedJob.getDateJob(),
                 savedJob.getDescription(),
-                savedJob.getCompany().getCompanyName()
+                savedJob.getCompany().getCompanyName(),
+                savedJob.getCandidates()
         );
     }
 
-    public List<JobVacancies> getAll(){
-        return jobVacanciesRepository.findAll();
+    public List<JobsVacanciesResponseDTO> getAll(){
+        return jobVacanciesRepository.findAll()
+                .stream()
+                .map(job -> new JobsVacanciesResponseDTO(
+                        job.getId(),
+                        job.getTitle(),
+                        job.getAbility(),
+                        job.getPayValue(),
+                        job.getInitTime(),
+                        job.getEndTime(),
+                        job.getDateJob(),
+                        job.getDescription(),
+                        job.getCompany().getCompanyName(),
+                        job.getCandidates()
+                )).toList();
     }
 
     public void deleteById(UUID id){

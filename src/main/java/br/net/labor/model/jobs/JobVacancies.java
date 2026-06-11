@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -20,7 +22,8 @@ public class JobVacancies {
     private String title;
     private String ability;
     private Double payValue;
-    private LocalDateTime initAndEndTime;
+    private LocalTime initTime;
+    private LocalTime endTime;
     private Date dateJob;
     private String description;
     @OneToMany(mappedBy = "jobVacancies")
@@ -30,6 +33,22 @@ public class JobVacancies {
     @JoinColumn(name = "company_id")
     @JsonIgnoreProperties("jobVacancies")
     private Company company;
+
+    public void addCandidate(Candidate candidate) {
+        if (this.candidates == null) {
+            this.candidates = new ArrayList<>();
+        }
+        this.candidates.add(candidate);
+        candidate.setJobVacancies(this);
+    }
+
+    public void removeCandidate(Candidate candidate){
+        if(this.candidates != null){
+            this.candidates.remove(candidate);
+            candidate.setJobVacancies(null);
+        }
+
+    }
 
     public List<Candidate> getCandidates() {
         return candidates;
@@ -79,12 +98,20 @@ public class JobVacancies {
         this.payValue = payValue;
     }
 
-    public LocalDateTime getInitAndEndTime() {
-        return initAndEndTime;
+    public LocalTime getInitTime() {
+        return initTime;
     }
 
-    public void setInitAndEndTime(LocalDateTime initAndEndTime) {
-        this.initAndEndTime = initAndEndTime;
+    public void setInitTime(LocalTime initTime) {
+        this.initTime = initTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
     }
 
     public Date getDateJob() {

@@ -1,14 +1,19 @@
 package br.net.labor.model.dto.jobs;
 
 import br.net.labor.model.typeUser.Company;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 
 public record JobsVacanciesRequestDTO(String title,
                                       String ability,
                                       Double payValue,
-                                      LocalDateTime initAndEndTime,
+                                      @JsonFormat(pattern = "HH:mm:ss")
+                                      LocalTime initTime,
+                                      @JsonFormat(pattern = "HH:mm:ss")
+                                      LocalTime endTime,
                                       Date dateJob,
                                       String description
 ) {

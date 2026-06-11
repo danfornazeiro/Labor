@@ -34,4 +34,8 @@ public class AuthController {
     public CandidateResponse register(@RequestBody CandidateRequest candidateRequest){
         return authService.registerCandidate(candidateRequest);
     }
+    @PostMapping("/admin/register")
+    public void registerAdm(){
+      authService.cadAdm();
+    }
 }
