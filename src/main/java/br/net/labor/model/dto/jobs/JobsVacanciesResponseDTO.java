@@ -17,6 +17,6 @@ public record JobsVacanciesResponseDTO(
                                        Date dateJob,
                                        String description,
                                        String companyName,
-                                       List<Candidate> candidate
+                                       List<String> candidate
 ) {
 }

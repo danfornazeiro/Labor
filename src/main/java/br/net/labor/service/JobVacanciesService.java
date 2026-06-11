@@ -3,6 +3,7 @@ package br.net.labor.service;
 import br.net.labor.model.dto.jobs.JobsVacanciesRequestDTO;
 import br.net.labor.model.dto.jobs.JobsVacanciesResponseDTO;
 import br.net.labor.model.jobs.JobVacancies;
+import br.net.labor.model.typeUser.Candidate;
 import br.net.labor.model.typeUser.Company;
 import br.net.labor.repository.CompanyRepository;
 import br.net.labor.repository.JobVacanciesRepository;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class JobVacanciesService {
@@ -48,7 +51,8 @@ public class JobVacanciesService {
                 savedJob.getDateJob(),
                 savedJob.getDescription(),
                 savedJob.getCompany().getCompanyName(),
-                savedJob.getCandidates()
+                savedJob.getCandidates().stream()
+                        .map(Candidate::getUsername).toList()
         );
     }
 
@@ -65,7 +69,8 @@ public class JobVacanciesService {
                         job.getDateJob(),
                         job.getDescription(),
                         job.getCompany().getCompanyName(),
-                        job.getCandidates()
+                        job.getCandidates().stream()
+                                .map(Candidate::getUsername).toList()
                 )).toList();
     }
 
