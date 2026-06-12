@@ -1,5 +1,6 @@
 package br.net.labor.model.user;
 
+import br.net.labor.model.hate.Rating;
 import br.net.labor.model.user.enums.RolesEnumType;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,6 +28,16 @@ public class User implements UserDetails {
     private List<Email> emails;
     @Enumerated(EnumType.STRING)
     private RolesEnumType role;
+    @OneToMany(mappedBy = "user")
+    private List<Rating> rating;
+
+    public List<Rating> getRating() {
+        return rating;
+    }
+
+    public void setRating(List<Rating> rating) {
+        this.rating = rating;
+    }
 
     public UUID getId() {
         return id;

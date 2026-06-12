@@ -123,6 +123,7 @@ public class AuthService {
        user.setRole(RolesEnumType.ROLE_ADMIN);
        userRepository.save(user);
     }
+    
 
 
 
