@@ -5,10 +5,7 @@ import br.net.labor.model.dto.likeJobs.LikeInJobsResponseDTO;
 import br.net.labor.model.jobs.JobVacancies;
 import br.net.labor.service.CandidateInJobService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -23,8 +20,8 @@ public class LikeInJobsController {
     }
 
     @PostMapping("/{id}")
-    public LikeInJobsResponseDTO likeJobs(@AuthenticationPrincipal JWTUserData userData, @PathVariable UUID id){
-        if(userData == null){
+    public LikeInJobsResponseDTO likeJobs(@AuthenticationPrincipal JWTUserData userData, @PathVariable UUID id) {
+        if (userData == null) {
             throw new RuntimeException("Usuário não autenticado");
         }
 
