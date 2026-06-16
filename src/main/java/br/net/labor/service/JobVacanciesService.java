@@ -7,6 +7,7 @@ import br.net.labor.model.typeUser.Candidate;
 import br.net.labor.model.typeUser.Company;
 import br.net.labor.repository.CompanyRepository;
 import br.net.labor.repository.JobVacanciesRepository;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,17 +27,7 @@ public class JobVacanciesService {
     public JobsVacanciesResponseDTO createJobsVacancies(JobsVacanciesRequestDTO jobsVacanciesRequestDTO, String email){
        Company company = companyRepository.findByUserEmail(email)
                .orElseThrow(() -> new RuntimeException("Empresa não encontrada para este usuário logado."));
-        JobVacancies jobVacancies = new JobVacancies();
-
-        jobVacancies.setTitle(jobsVacanciesRequestDTO.title());
-        jobVacancies.setAbility(jobsVacanciesRequestDTO.ability());
-        jobVacancies.setPayValue(jobsVacanciesRequestDTO.payValue());
-        jobVacancies.setInitTime(jobsVacanciesRequestDTO.initTime());
-        jobVacancies.setEndTime(jobsVacanciesRequestDTO.endTime());
-        jobVacancies.setDateJob(jobsVacanciesRequestDTO.dateJob());
-        jobVacancies.setDescription(jobsVacanciesRequestDTO.description());
-        jobVacancies.setCompany(company);
-        jobVacancies.setCandidates(null);
+        JobVacancies jobVacancies = getJobVacancies(jobsVacanciesRequestDTO, company);
         var savedJob = jobVacanciesRepository.save(jobVacancies);
 
         return new JobsVacanciesResponseDTO(
@@ -52,6 +43,21 @@ public class JobVacanciesService {
                 savedJob.getCandidates().stream()
                         .map(Candidate::getUsername).toList()
         );
+    }
+
+    private static @NonNull JobVacancies getJobVacancies(JobsVacanciesRequestDTO jobsVacanciesRequestDTO, Company company) {
+        JobVacancies jobVacancies = new JobVacancies();
+
+        jobVacancies.setTitle(jobsVacanciesRequestDTO.title());
+        jobVacancies.setAbility(jobsVacanciesRequestDTO.ability());
+        jobVacancies.setPayValue(jobsVacanciesRequestDTO.payValue());
+        jobVacancies.setInitTime(jobsVacanciesRequestDTO.initTime());
+        jobVacancies.setEndTime(jobsVacanciesRequestDTO.endTime());
+        jobVacancies.setDateJob(jobsVacanciesRequestDTO.dateJob());
+        jobVacancies.setDescription(jobsVacanciesRequestDTO.description());
+        jobVacancies.setCompany(company);
+        jobVacancies.setCandidates(null);
+        return jobVacancies;
     }
 
     public List<JobsVacanciesResponseDTO> getAll(){

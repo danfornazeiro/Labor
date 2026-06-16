@@ -1,7 +1,5 @@
 package br.net.labor.model.dto.jobs;
 
-import br.net.labor.model.typeUser.Candidate;
-
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;

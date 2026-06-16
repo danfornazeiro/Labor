@@ -1,5 +1,6 @@
 package br.net.labor.model.hate;
 
+import br.net.labor.model.typeUser.Candidate;
 import br.net.labor.model.user.User;
 import jakarta.persistence.*;
 
@@ -15,11 +16,30 @@ public class Rating {
     private Integer rating = 0;
     private String ratingDescription;
     @ManyToOne
+    @JoinColumn(name = "send_by_id")
+    private Candidate sentBy;
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    public Candidate sentBy() {
+        return sentBy;
+    }
+
+    public void sentBy(Candidate sentBy) {
+        this.sentBy = sentBy;
+    }
+
     public User getUser() {
         return user;
+    }
+
+    public Candidate getSentBy() {
+        return sentBy;
+    }
+
+    public void setSentBy(Candidate sentBy) {
+        this.sentBy = sentBy;
     }
 
     public void setUser(User user) {
