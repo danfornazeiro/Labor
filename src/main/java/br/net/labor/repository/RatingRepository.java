@@ -1,6 +1,6 @@
 package br.net.labor.repository;
 
-import br.net.labor.model.hate.Rating;
+import br.net.labor.model.rate.Rating;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

@@ -2,7 +2,7 @@ package br.net.labor.service;
 
 import br.net.labor.model.dto.rate.RateRequestDTO;
 import br.net.labor.model.dto.rate.RatingResponseDTO;
-import br.net.labor.model.hate.Rating;
+import br.net.labor.model.rate.Rating;
 
 import br.net.labor.model.typeUser.Candidate;
 

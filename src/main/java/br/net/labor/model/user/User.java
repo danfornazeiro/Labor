@@ -1,6 +1,6 @@
 package br.net.labor.model.user;
 
-import br.net.labor.model.hate.Rating;
+import br.net.labor.model.rate.Rating;
 import br.net.labor.model.user.enums.RolesEnumType;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;

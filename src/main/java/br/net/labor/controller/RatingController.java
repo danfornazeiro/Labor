@@ -3,11 +3,7 @@ package br.net.labor.controller;
 import br.net.labor.config.JWTUserData;
 import br.net.labor.model.dto.rate.RateRequestDTO;
 import br.net.labor.model.dto.rate.RatingResponseDTO;
-import br.net.labor.model.hate.Rating;
-import br.net.labor.model.typeUser.Company;
-import br.net.labor.model.user.User;
 import br.net.labor.service.RatingService;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
