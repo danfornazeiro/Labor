@@ -25,7 +25,6 @@ public class RatingController {
     }
 
     @PostMapping("/{id}")
-    @PreAuthorize("hasRole('CANDIDATE')")
     public RatingResponseDTO ratingCompany(@AuthenticationPrincipal JWTUserData userData, @PathVariable UUID id, @RequestBody RateRequestDTO rateRequestDTO){
         if(userData == null){
             throw new RuntimeException("Usuário não autenticado");
@@ -36,8 +35,6 @@ public class RatingController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('CANDIDATE')")
-
     public List<RatingResponseDTO> getAll(){
         return ratingService.getAll();
     }

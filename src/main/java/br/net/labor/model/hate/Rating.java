@@ -15,18 +15,17 @@ public class Rating {
     private UUID id;
     private Integer rating = 0;
     private String ratingDescription;
-    @ManyToOne
-    @JoinColumn(name = "send_by_id")
-    private Candidate sentBy;
+    @Column(name = "sent_by")
+    private String sentBy;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Candidate sentBy() {
+    public String sentBy() {
         return sentBy;
     }
 
-    public void sentBy(Candidate sentBy) {
+    public void sentBy(String sentBy) {
         this.sentBy = sentBy;
     }
 
@@ -34,11 +33,11 @@ public class Rating {
         return user;
     }
 
-    public Candidate getSentBy() {
+    public String getSentBy() {
         return sentBy;
     }
 
-    public void setSentBy(Candidate sentBy) {
+    public void setSentBy(String sentBy) {
         this.sentBy = sentBy;
     }
 

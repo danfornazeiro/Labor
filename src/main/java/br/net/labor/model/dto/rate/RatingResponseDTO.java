@@ -6,6 +6,6 @@ public record RatingResponseDTO(
         UUID id,
         Integer rating,
         String ratingDescription,
-        String candidateName,
-        String companyName
+        String whoRated,
+        String rated
 ) {}
