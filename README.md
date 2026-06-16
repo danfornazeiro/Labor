@@ -184,7 +184,6 @@ cd D:\felipeCoisas\JAVA\labor
 - Padronizar nomes de pacotes e DTOs
 - Documentar exemplos de request/response de cada endpoint
 - Adicionar testes automatizados para controllers e serviços
-- Externalizar segredos do `application.properties`
 - Melhorar tratamento de erros com respostas HTTP padronizadas
 
 ## Autor / manutenção
