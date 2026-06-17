@@ -25,6 +25,7 @@ public class Company {
     @OneToMany(mappedBy = "company")
     private List<JobVacancies> jobVacancies = new ArrayList<>();
 
+
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;

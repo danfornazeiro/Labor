@@ -1,5 +1,6 @@
 package br.net.labor.model.jobs;
 
+import br.net.labor.model.candidateApplication.CandidateApplication;
 import br.net.labor.model.typeUser.Candidate;
 import br.net.labor.model.typeUser.Company;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -26,36 +27,19 @@ public class JobVacancies {
     private LocalTime endTime;
     private Date dateJob;
     private String description;
-    @OneToMany(mappedBy = "jobVacancies")
-    @JsonIgnoreProperties("jobVacancies")
-    private List<Candidate> candidates;
+    @OneToMany(mappedBy = "job")
+    private List<CandidateApplication> applications = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "company_id")
     @JsonIgnoreProperties("jobVacancies")
     private Company company;
 
-    public void addCandidate(Candidate candidate) {
-        if (this.candidates == null) {
-            this.candidates = new ArrayList<>();
-        }
-        this.candidates.add(candidate);
-        candidate.setJobVacancies(this);
+    public List<CandidateApplication> getApplications() {
+        return applications;
     }
 
-    public void removeCandidate(Candidate candidate){
-        if(this.candidates != null){
-            this.candidates.remove(candidate);
-            candidate.setJobVacancies(null);
-        }
-
-    }
-
-    public List<Candidate> getCandidates() {
-        return candidates;
-    }
-
-    public void setCandidates(List<Candidate> candidates) {
-        this.candidates = candidates;
+    public void setApplications(List<CandidateApplication> applications) {
+        this.applications = applications;
     }
 
     public Company getCompany() {

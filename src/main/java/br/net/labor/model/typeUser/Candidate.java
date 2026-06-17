@@ -1,10 +1,13 @@
 package br.net.labor.model.typeUser;
 
+import br.net.labor.model.candidateApplication.CandidateApplication;
 import br.net.labor.model.jobs.JobVacancies;
 import br.net.labor.model.user.User;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -21,9 +24,16 @@ public class Candidate {
     private String userPhoto;
     private String status;
     private String realName;
-    @ManyToOne
-    @JoinColumn(name = "job_vacancy_id")
-    private JobVacancies jobVacancies;
+    @OneToMany(mappedBy = "candidate")
+    private List<CandidateApplication> applications = new ArrayList<>();
+
+    public List<CandidateApplication> getApplications() {
+        return applications;
+    }
+
+    public void setApplications(List<CandidateApplication> applications) {
+        this.applications = applications;
+    }
 
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -93,11 +103,5 @@ public class Candidate {
         this.user = user;
     }
 
-    public JobVacancies getJobVacancies() {
-        return jobVacancies;
-    }
 
-    public void setJobVacancies(JobVacancies jobVacancies) {
-        this.jobVacancies = jobVacancies;
-    }
 }
