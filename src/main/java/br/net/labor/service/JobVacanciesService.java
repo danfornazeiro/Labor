@@ -3,6 +3,7 @@ package br.net.labor.service;
 import br.net.labor.model.dto.jobs.JobsVacanciesRequestDTO;
 import br.net.labor.model.dto.jobs.JobsVacanciesResponseWithCandidatesDTO;
 import br.net.labor.model.dto.jobs.JobsVacanciesResponseWithOutCandidatesDTO;
+import br.net.labor.model.dto.likeJobs.CandidateInJobDTO;
 import br.net.labor.model.jobs.JobVacancies;
 import br.net.labor.model.typeUser.Candidate;
 import br.net.labor.model.typeUser.Company;
@@ -62,7 +63,11 @@ public class JobVacanciesService {
                         ),
                         job.getApplications()
                                 .stream()
-                                .map(application -> application.getCandidate().getUsername())
+                                .map(application -> new CandidateInJobDTO(
+                                        application.getCandidate().getId(),
+                                        application.getCandidate().getUsername(),
+                                        application.getStatus()
+                                ))
                                 .toList()
                 ))
                 .toList();
