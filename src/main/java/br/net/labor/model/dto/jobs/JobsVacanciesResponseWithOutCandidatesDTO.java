@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public record JobsVacanciesResponseDTO(
+public record JobsVacanciesResponseWithOutCandidatesDTO(
                                        UUID id,
                                        String title,
                                        String ability,
@@ -14,7 +14,6 @@ public record JobsVacanciesResponseDTO(
                                        LocalTime endTime,
                                        Date dateJob,
                                        String description,
-                                       String companyName,
-                                       List<String> candidate
+                                       String companyName
 ) {
 }

@@ -1,7 +1,8 @@
 package br.net.labor.service;
 
 import br.net.labor.model.dto.jobs.JobsVacanciesRequestDTO;
-import br.net.labor.model.dto.jobs.JobsVacanciesResponseDTO;
+import br.net.labor.model.dto.jobs.JobsVacanciesResponseWithCandidatesDTO;
+import br.net.labor.model.dto.jobs.JobsVacanciesResponseWithOutCandidatesDTO;
 import br.net.labor.model.jobs.JobVacancies;
 import br.net.labor.model.typeUser.Candidate;
 import br.net.labor.model.typeUser.Company;
@@ -24,13 +25,13 @@ public class JobVacanciesService {
         this.companyRepository = companyRepository;
     }
 
-    public JobsVacanciesResponseDTO createJobsVacancies(JobsVacanciesRequestDTO jobsVacanciesRequestDTO, String email){
+    public JobsVacanciesResponseWithOutCandidatesDTO createJobsVacancies(JobsVacanciesRequestDTO jobsVacanciesRequestDTO, String email){
        Company company = companyRepository.findByUserEmail(email)
                .orElseThrow(() -> new RuntimeException("Empresa não encontrada para este usuário logado."));
         JobVacancies jobVacancies = getJobVacancies(jobsVacanciesRequestDTO, company);
         var savedJob = jobVacanciesRepository.save(jobVacancies);
 
-        return new JobsVacanciesResponseDTO(
+        return new JobsVacanciesResponseWithOutCandidatesDTO(
                 savedJob.getId(),
                 savedJob.getTitle(),
                 savedJob.getAbility(),
@@ -39,11 +40,38 @@ public class JobVacanciesService {
                 savedJob.getEndTime(),
                 savedJob.getDateJob(),
                 savedJob.getDescription(),
-                savedJob.getCompany().getCompanyName(),
-                savedJob.getCandidates().stream()
-                        .map(Candidate::getUsername).toList()
+                savedJob.getCompany().getCompanyName()
         );
     }
+
+
+    public List<JobsVacanciesResponseWithCandidatesDTO> getAll(){
+        return jobVacanciesRepository.findAll()
+                .stream()
+                .map(job -> new JobsVacanciesResponseWithCandidatesDTO(
+                        new JobsVacanciesResponseWithOutCandidatesDTO(
+                                job.getId(),
+                                job.getTitle(),
+                                job.getAbility(),
+                                job.getPayValue(),
+                                job.getInitTime(),
+                                job.getEndTime(),
+                                job.getDateJob(),
+                                job.getDescription(),
+                                job.getCompany().getCompanyName()
+                        ),
+                        job.getApplications()
+                                .stream()
+                                .map(application -> application.getCandidate().getUsername())
+                                .toList()
+                ))
+                .toList();
+    }
+
+    public void deleteById(UUID id){
+        jobVacanciesRepository.deleteById(id);
+    }
+
 
     private static @NonNull JobVacancies getJobVacancies(JobsVacanciesRequestDTO jobsVacanciesRequestDTO, Company company) {
         JobVacancies jobVacancies = new JobVacancies();
@@ -56,30 +84,7 @@ public class JobVacanciesService {
         jobVacancies.setDateJob(jobsVacanciesRequestDTO.dateJob());
         jobVacancies.setDescription(jobsVacanciesRequestDTO.description());
         jobVacancies.setCompany(company);
-        jobVacancies.setCandidates(null);
         return jobVacancies;
-    }
-
-    public List<JobsVacanciesResponseDTO> getAll(){
-        return jobVacanciesRepository.findAll()
-                .stream()
-                .map(job -> new JobsVacanciesResponseDTO(
-                        job.getId(),
-                        job.getTitle(),
-                        job.getAbility(),
-                        job.getPayValue(),
-                        job.getInitTime(),
-                        job.getEndTime(),
-                        job.getDateJob(),
-                        job.getDescription(),
-                        job.getCompany().getCompanyName(),
-                        job.getCandidates().stream()
-                                .map(Candidate::getUsername).toList()
-                )).toList();
-    }
-
-    public void deleteById(UUID id){
-        jobVacanciesRepository.deleteById(id);
     }
 
 }
