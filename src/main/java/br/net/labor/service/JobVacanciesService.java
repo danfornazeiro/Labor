@@ -33,7 +33,9 @@ public class JobVacanciesService {
     public JobsVacanciesResponseWithOutCandidatesDTO createJobsVacancies(JobsVacanciesRequestDTO jobsVacanciesRequestDTO, String email){
        Company company = companyRepository.findByUserEmail(email)
                .orElseThrow(() -> new RuntimeException("Empresa não encontrada para este usuário logado."));
-        JobVacancies jobVacancies = getJobVacancies(jobsVacanciesRequestDTO, company);
+       JobVacancies jobVacancies = getJobVacancies(jobsVacanciesRequestDTO, company);
+
+
         var savedJob = jobVacanciesRepository.save(jobVacancies);
 
         return new JobsVacanciesResponseWithOutCandidatesDTO(
@@ -99,18 +101,35 @@ public class JobVacanciesService {
     }
 
 
-    private static @NonNull JobVacancies getJobVacancies(JobsVacanciesRequestDTO jobsVacanciesRequestDTO, Company company) {
-        JobVacancies jobVacancies = new JobVacancies();
+  private static @NonNull JobVacancies getJobVacancies(JobsVacanciesRequestDTO jobsVacanciesRequestDTO, Company company) {
+      JobVacancies jobVacancies = new JobVacancies();
 
-        jobVacancies.setTitle(jobsVacanciesRequestDTO.title());
-        jobVacancies.setAbility(jobsVacanciesRequestDTO.ability());
-        jobVacancies.setPayValue(jobsVacanciesRequestDTO.payValue());
-        jobVacancies.setInitTime(jobsVacanciesRequestDTO.initTime());
-        jobVacancies.setEndTime(jobsVacanciesRequestDTO.endTime());
-        jobVacancies.setDateJob(jobsVacanciesRequestDTO.dateJob());
-        jobVacancies.setDescription(jobsVacanciesRequestDTO.description());
-        jobVacancies.setCompany(company);
-        return jobVacancies;
+      jobVacancies.setTitle(jobsVacanciesRequestDTO.title());
+      jobVacancies.setAbility(jobsVacanciesRequestDTO.ability());
+      jobVacancies.setPayValue(jobsVacanciesRequestDTO.payValue());
+
+      if (jobsVacanciesRequestDTO.dateJob().isBefore(LocalDate.now())) {
+          throw new RuntimeException("Date invalid");
+      }
+
+      if (!jobsVacanciesRequestDTO.endTime()
+              .isAfter(jobsVacanciesRequestDTO.initTime())) {
+          throw new RuntimeException("End time must be after start time");
+      }
+
+      if (jobsVacanciesRequestDTO.dateJob().equals(LocalDate.now())
+              && jobsVacanciesRequestDTO.endTime().isBefore(LocalTime.now())) {
+          throw new RuntimeException("Job already finished");
+      }
+
+      jobVacancies.setInitTime(jobsVacanciesRequestDTO.initTime());
+      jobVacancies.setEndTime(jobsVacanciesRequestDTO.endTime());
+      jobVacancies.setDateJob(jobsVacanciesRequestDTO.dateJob());
+
+      jobVacancies.setDescription(jobsVacanciesRequestDTO.description());
+      jobVacancies.setCompany(company);
+
+      return jobVacancies;
     }
 
 }
