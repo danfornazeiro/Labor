@@ -6,6 +6,7 @@ import br.net.labor.model.typeUser.Company;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class JobVacancies {
     private Double payValue;
     private LocalTime initTime;
     private LocalTime endTime;
-    private Date dateJob;
+    private LocalDate dateJob;
     private String description;
     @OneToMany(mappedBy = "job")
     private List<CandidateApplication> applications = new ArrayList<>();
@@ -98,11 +99,11 @@ public class JobVacancies {
         this.endTime = endTime;
     }
 
-    public Date getDateJob() {
+    public LocalDate getDateJob() {
         return dateJob;
     }
 
-    public void setDateJob(Date dateJob) {
+    public void setDateJob(LocalDate dateJob) {
         this.dateJob = dateJob;
     }
 

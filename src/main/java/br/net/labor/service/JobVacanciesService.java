@@ -10,8 +10,12 @@ import br.net.labor.model.typeUser.Company;
 import br.net.labor.repository.CompanyRepository;
 import br.net.labor.repository.JobVacanciesRepository;
 import org.jspecify.annotations.NonNull;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -71,6 +75,23 @@ public class JobVacanciesService {
                                 .toList()
                 ))
                 .toList();
+    }
+
+    @Scheduled(fixedRate = 60000)
+    private void finishJobVacancies(){
+        System.out.println("Executando limpeza de vagas...");
+        List<JobVacancies> jobVacancies = jobVacanciesRepository.findAll();
+
+        for(JobVacancies vacancy : jobVacancies){
+            LocalTime jobFinishedEndTime = vacancy.getEndTime();
+            LocalTime currentHour = LocalTime.now();
+            LocalDate currentDay = LocalDate.now();
+            LocalDate jobDay = vacancy.getDateJob();
+            if(!jobFinishedEndTime.isAfter(currentHour) && !jobDay.isAfter(currentDay)){
+                jobVacanciesRepository.delete(vacancy);
+            }
+        }
+
     }
 
     public void deleteById(UUID id){

@@ -8,4 +8,6 @@ import java.util.UUID;
 
 public interface ApplicationRepository extends JpaRepository<CandidateApplication, UUID> {
     CandidateApplication findCandidateApplicationByStatus(ApplicationStatus status);
+
+    boolean existsByCandidateIdAndStatus(UUID idCandidate, ApplicationStatus applicationStatus);
 }
