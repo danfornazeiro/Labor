@@ -31,8 +31,7 @@ public class CandidateInJobService {
                 .orElseThrow(() -> new RuntimeException("Candidate not found"));
         JobVacancies jobVacancies = jobVacanciesRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Vacancy not found"));
-        CandidateApplication application =
-                new CandidateApplication();
+        CandidateApplication application = new CandidateApplication();
 
         application.setCandidate(candidate);
         application.setJob(jobVacancies);

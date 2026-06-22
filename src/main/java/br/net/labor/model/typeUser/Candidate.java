@@ -2,6 +2,7 @@ package br.net.labor.model.typeUser;
 
 import br.net.labor.model.candidateApplication.CandidateApplication;
 import br.net.labor.model.jobs.JobVacancies;
+import br.net.labor.model.schedule.Schedule;
 import br.net.labor.model.user.User;
 import jakarta.persistence.*;
 
@@ -26,6 +27,9 @@ public class Candidate {
     private String realName;
     @OneToMany(mappedBy = "candidate")
     private List<CandidateApplication> applications = new ArrayList<>();
+    @ManyToMany(mappedBy = "candidates")
+    private List<Schedule> schedules = new ArrayList<>();
+
 
     public List<CandidateApplication> getApplications() {
         return applications;

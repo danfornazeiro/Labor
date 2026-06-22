@@ -1,6 +1,7 @@
 package br.net.labor.model.jobs;
 
 import br.net.labor.model.candidateApplication.CandidateApplication;
+import br.net.labor.model.schedule.Schedule;
 import br.net.labor.model.typeUser.Candidate;
 import br.net.labor.model.typeUser.Company;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -34,6 +35,8 @@ public class JobVacancies {
     @JoinColumn(name = "company_id")
     @JsonIgnoreProperties("jobVacancies")
     private Company company;
+    @OneToMany(mappedBy = "job")
+    private List<Schedule> schedules = new ArrayList<>();
 
     public List<CandidateApplication> getApplications() {
         return applications;
@@ -113,5 +116,13 @@ public class JobVacancies {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Schedule> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(List<Schedule> schedules) {
+        this.schedules = schedules;
     }
 }

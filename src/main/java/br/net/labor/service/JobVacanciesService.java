@@ -32,8 +32,6 @@ public class JobVacanciesService {
         Company company = companyRepository.findByUserEmail(email)
                 .orElseThrow(() -> new RuntimeException("Empresa não encontrada para este usuário logado."));
         JobVacancies jobVacancies = getJobVacancies(jobsVacanciesRequestDTO, company);
-
-
         var savedJob = jobVacanciesRepository.save(jobVacancies);
 
         return new JobsVacanciesResponseWithOutCandidatesDTO(

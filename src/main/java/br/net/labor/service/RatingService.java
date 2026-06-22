@@ -43,7 +43,7 @@ public class RatingService {
         rating.setRating(rateRequestDTO.rating());
         rating.setRatingDescription(rateRequestDTO.ratingDescription());
 
-        //avaliando empresa
+        //candidate rating company
         if (userLogged.getRole() == RolesEnumType.ROLE_CANDIDATE) {
             if (userLogged.getId() == user.getId()) {
                 throw new RuntimeException("You cannot self evaluate");
@@ -65,7 +65,7 @@ public class RatingService {
                     user.getUsername()
             );
         }
-        //avaliando candidato
+        //company ranting candidate
         if (userLogged.getRole() == RolesEnumType.ROLE_COMPANY) {
             if (userLogged.getId() == user.getId()) {
                 throw new RuntimeException("You cannot self evaluate");
